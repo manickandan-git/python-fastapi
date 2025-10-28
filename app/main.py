@@ -1,4 +1,9 @@
+from fastapi.params import Depends
+from typing_extensions import Annotated
 from fastapi import FastAPI
+
+from app.models import User
+from app.oauth2 import get_current_user
 from .routers import post, user, auth,vote
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -28,6 +33,15 @@ app.include_router(vote.router)
 @app.get("/")
 def root():
     return {"message": "Hello World pushing out to ubuntu"}
+
+# 2. Use the dependency on a route
+@app.get("/users/me", response_model=User)
+async def read_users_me(
+    # By including this dependency, FastAPI adds security requirements
+    # to the route's definition in the generated OpenAPI spec.
+    current_user: Annotated[User, Depends(get_current_user)] 
+):
+    return current_user
 
 
 
