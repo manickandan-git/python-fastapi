@@ -6,7 +6,9 @@ from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from .config import settings
-import app
+
+
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
 
@@ -48,11 +50,3 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
     return user
 
-# 2. Use the dependency on a route
-@app.get("/users/me", response_model=schemas.UserResponse)
-async def read_users_me(
-    # By including this dependency, FastAPI adds security requirements
-    # to the route's definition in the generated OpenAPI spec.
-    current_user: Annotated[schemas.UserResponse, Depends(get_current_user)] 
-):
-    return current_user
