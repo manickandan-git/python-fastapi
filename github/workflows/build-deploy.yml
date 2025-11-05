@@ -7,4 +7,4 @@ jobs:
     - name: Build and Deploy
       uses: actions/checkout@v3
     - name: say hellow to me
-      run : echo "hello world1"
+      run : echo "hello world!1"
