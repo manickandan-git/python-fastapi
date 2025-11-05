@@ -14,7 +14,8 @@ class PostCreate(PostBase):
 
 class UserBase(BaseModel):
     email: EmailStr
-
+    phone_number: Optional[str]
+    
 class UserResponse(UserBase):
     id: int
     created_at: datetime
@@ -23,7 +24,8 @@ class UserResponse(UserBase):
         orm_mode = True
     
 class UserCreate(UserBase):
-    password: str   
+    password: str  
+    
 
 class UserLogin(UserBase):
     password: str
